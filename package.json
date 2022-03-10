@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Helping tools for work with oData filters.",
   "type": "module",
+  "main": "./src/",
   "repository": {
     "type": "git",
     "url": "https://github.com/paudr/odata-filter-tools.git"
