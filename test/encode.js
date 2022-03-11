@@ -196,3 +196,44 @@ test('Valor INF.', t => {
 
   t.end()
 })
+
+test('Reemplazar alias con valores.', t => {
+  const eqComparison = odataFilterEncode(
+    {
+      eq: [
+        { property: 'Title' },
+        { alias: '@title' }
+      ]
+    },
+    [['title', 'A book']]
+  )
+
+  t.equal(eqComparison, "(Title eq 'A book')")
+
+  const betweenComparison = odataFilterEncode(
+    {
+      and: [{
+        ge: [
+          { property: 'Date' },
+          { date: { alias: '@date_ge' } }
+        ]
+      }, {
+        le: [
+          { property: 'Date' },
+          { date: { alias: '@date_le' } }
+        ]
+      }]
+    },
+    [
+      ['date_ge', new Date(2022, 0, 1)],
+      ['date_le', new Date(2022, 2, 10)]
+    ]
+  )
+
+  t.equal(
+    betweenComparison,
+    '((Date ge date(2021-12-31T23:00:00.000Z)) and (Date le date(2022-03-09T23:00:00.000Z)))'
+  )
+
+  t.end()
+})

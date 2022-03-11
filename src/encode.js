@@ -1,6 +1,6 @@
 import { operators, functions } from './definition.js'
 
-export default function odataFilterEncode (structure) {
+export default function odataFilterEncode (structure, entries) {
   if (structure === undefined || typeof structure === 'symbol') {
     return undefined
   }
@@ -34,17 +34,17 @@ export default function odataFilterEncode (structure) {
   }
 
   if (structure.not) {
-    return '-' + odataFilterEncode(structure.not)
+    return '-' + odataFilterEncode(structure.not, entries)
   }
 
   if (Array.isArray(structure)) {
     return `(${
-      structure.map(element => odataFilterEncode(element)).join(',')
+      structure.map(element => odataFilterEncode(element, entries)).join(',')
     })`
   }
 
   if (structure.lambda) {
-    return `${structure.path}/${structure.lambda}(${structure.name}:${odataFilterEncode(structure.expression)})`
+    return `${structure.path}/${structure.lambda}(${structure.name}:${odataFilterEncode(structure.expression, entries)})`
   }
 
   if (structure.guid) {
@@ -52,7 +52,13 @@ export default function odataFilterEncode (structure) {
   }
 
   if (structure.alias) {
-    return structure.alias
+    const aliasName = structure.alias.substring(1)
+    const alias = Array.isArray(entries) && entries.find(([name]) => name === aliasName)
+    if (alias) {
+      return odataFilterEncode(alias[1], entries)
+    } else {
+      return structure.alias
+    }
   }
 
   if (structure.property) {
@@ -66,17 +72,17 @@ export default function odataFilterEncode (structure) {
   const functionName = functions.find(name => name in structure)
   if (functionName) {
     if (Array.isArray(structure[functionName])) {
-      const parameters = structure[functionName].map(param => odataFilterEncode(param))
+      const parameters = structure[functionName].map(param => odataFilterEncode(param, entries))
       return `${functionName}(${parameters.join(', ')})`
     } else {
-      const parameter = odataFilterEncode(structure[functionName])
+      const parameter = odataFilterEncode(structure[functionName], entries)
       return `${functionName}(${parameter})`
     }
   }
 
   const operatorName = operators.find(name => name in structure)
   if (operatorName) {
-    const operands = structure[operatorName].map(operand => odataFilterEncode(operand))
+    const operands = structure[operatorName].map(operand => odataFilterEncode(operand, entries))
     return `(${operands.join(` ${operatorName} `)})`
   }
 
