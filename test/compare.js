@@ -189,7 +189,7 @@ test('Extrae valores de los alias.', t => {
   t.end()
 })
 
-test('Funciona con otro tipo de nodos con alias', t => {
+test('Funciones lambda.', t => {
   const entries = []
   t.true(odataFilterCompare(
     {
