@@ -17,7 +17,7 @@ function getRegexReader (regex) {
 }
 
 function dateReader (string, index) {
-  const reader = getRegexReader(/^(\d{4}-(?:0?\d|1[012])-(?:[012]?\d|3[01])(?:T(?:[01]?\d|2[0-3]):[0-5]?\d(?::[0-5]?\d(?:\.\d{1,12})?)?Z)?)/)
+  const reader = getRegexReader(/^(\d{4}-(?:0?\d|1[012])-(?:[0123]?\d|3[01])(?:T(?:[01]?\d|2[0-3]):[0-5]?\d(?::[0-5]?\d(?:\.\d{1,12})?)?Z)?)/)
   const token = reader(string, index)
   token.value = new Date(token.value)
   return token
@@ -83,7 +83,7 @@ const tokenReaders = [{
   reader: getRegexReader(/^(\d{8}-\d{4}-\d{4}-\d{4}-\d{12})/)
 }, {
   name: 'DATE',
-  test: (string, index) => /^\d{4}-(?:0?\d|1[012])-(?:[012]?\d|3[01])(?:T(?:[01]?\d|2[0-3]):[0-5]?\d(?::[0-5]?\d(?:\.\d{1,12})?)?Z)?/.test(string.substring(index)),
+  test: (string, index) => /^\d{4}-(?:0?\d|1[012])-(?:[0123]?\d|3[01])(?:T(?:[01]?\d|2[0-3]):[0-5]?\d(?::[0-5]?\d(?:\.\d{1,12})?)?Z)?/.test(string.substring(index)),
   reader: dateReader
 }, {
   name: 'NUMBER',
