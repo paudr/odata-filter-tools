@@ -267,5 +267,34 @@ test('Parentesis en cada operacion.', t => {
     }]
   })
 
+  const andOperation = odataFilterParser("(Rooms/any(room:(room/BaseRate lt 3000)) and ((LastRenovationDate gt 2022-03-09T23:00:00.000Z)) and (ParkingIncluded eq 'Yes'))")
+  t.deepEqual(andOperation, {
+    and: [
+      {
+        lambda: 'any',
+        path: 'Rooms',
+        name: 'room',
+        expression: {
+          lt: [
+            { property: 'room/BaseRate' },
+            3000
+          ]
+        }
+      },
+      {
+        gt: [
+          { property: 'LastRenovationDate' },
+          new Date(2022, 2, 10)
+        ]
+      },
+      {
+        eq: [
+          { property: 'ParkingIncluded' },
+          'Yes'
+        ]
+      }
+    ]
+  })
+
   t.end()
 })
