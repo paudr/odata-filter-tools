@@ -221,3 +221,35 @@ test('Funciones lambda.', t => {
 
   t.end()
 })
+
+test('Alias por delante', t => {
+  const eqEntries = []
+  const eqComparison = odataFilterCompare(
+    {
+      and: [{
+        eq: [
+          { property: 'Title' },
+          { alias: '@title' }
+        ]
+      }, {
+        eq: [1, 1]
+      }]
+    },
+    {
+      and: [{
+        eq: [
+          { property: 'Title' },
+          'A book'
+        ]
+      }, {
+        eq: [1, 2]
+      }]
+    },
+    eqEntries
+  )
+
+  t.false(eqComparison)
+  t.deepEqual(eqEntries, [])
+
+  t.end()
+})

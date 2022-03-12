@@ -14,14 +14,18 @@ export default function odataFilterCompare (conditionStructure, dataStructure, e
       Array.isArray(dataStructure) &&
       conditionStructure.length === dataStructure.length
     ) {
+      const transactionEntries = Array.isArray(entries) ? [] : null
       let value = true
       for (let index = 0; index < conditionStructure.length; index += 1) {
-        const result = odataFilterCompare(conditionStructure[index], dataStructure[index], entries)
+        const result = odataFilterCompare(conditionStructure[index], dataStructure[index], transactionEntries)
         if (result === false) {
           return false
         } else if (Array.isArray(result)) {
           value = result
         }
+      }
+      if (value && transactionEntries?.length > 0) {
+        entries.push(...transactionEntries)
       }
       return value
     }
@@ -40,14 +44,18 @@ export default function odataFilterCompare (conditionStructure, dataStructure, e
         conditionKeys.length === dataKeys.length &&
         conditionKeys.every(key => dataKeys.includes(key))
       ) {
+        const transactionEntries = Array.isArray(entries) ? [] : null
         let value = true
         for (const key of conditionKeys) {
-          const result = odataFilterCompare(conditionStructure[key], dataStructure[key], entries)
+          const result = odataFilterCompare(conditionStructure[key], dataStructure[key], transactionEntries)
           if (result === false) {
             return false
           } else if (Array.isArray(result)) {
             value = result
           }
+        }
+        if (value && transactionEntries?.length > 0) {
+          entries.push(...transactionEntries)
         }
         return value
       }
