@@ -1,6 +1,6 @@
 {
   "name": "odata-filter-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Helping tools for work with oData filters.",
   "type": "module",
   "main": "./src/",
