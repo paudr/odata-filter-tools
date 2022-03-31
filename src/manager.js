@@ -45,14 +45,16 @@ export default class OdataFilterManager {
       throw new Error()
     }
     const entries = []
-    const structure = odataFilterParser(filter)
-    const parts = Array.isArray(structure[this.aggrupationOperation])
-      ? [structure, ...structure[this.aggrupationOperation]]
-      : [structure]
-    for (const part of parts) {
-      const currentEntries = this.getConditionValue(part)
-      if (currentEntries.length > 0) {
-        entries.push(...currentEntries)
+    if (filter) {
+      const structure = odataFilterParser(filter)
+      const parts = Array.isArray(structure[this.aggrupationOperation])
+        ? [structure, ...structure[this.aggrupationOperation]]
+        : [structure]
+      for (const part of parts) {
+        const currentEntries = this.getConditionValue(part)
+        if (currentEntries.length > 0) {
+          entries.push(...currentEntries)
+        }
       }
     }
     return entries
