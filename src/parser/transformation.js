@@ -91,7 +91,7 @@ function visitBinaryOp (binaryOp) {
 
 function visitExpression (expression) {
   if (expression.type === 'collection') {
-    if (expression.value.length === 1 && ['binaryOp', 'collection', 'lambda'].includes(expression.value[0].type)) {
+    if (expression.value.length === 1 && ['binaryOp', 'collection', 'lambda', 'functionCall'].includes(expression.value[0].type)) {
       return visitExpression(expression.value[0])
     } else {
       return expression.value.map(visitExpression)

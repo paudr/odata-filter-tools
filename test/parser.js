@@ -243,6 +243,14 @@ test('Parentesis de un elemento.', t => {
       100
     ]
   })
+  const contains = odataFilterParser("(((contains(CODI, 'pr'))))")
+  t.deepEqual(contains, {
+    contains: [
+      { property: 'CODI' },
+      'pr'
+    ]
+  })
+
   t.end()
 })
 
