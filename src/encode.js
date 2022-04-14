@@ -39,7 +39,7 @@ export default function odataFilterEncode (structure, entries) {
 
   if (Array.isArray(structure)) {
     return `(${
-      structure.map(element => odataFilterEncode(element, entries)).join(',')
+      structure.map(element => odataFilterEncode(element, entries)).join()
     })`
   }
 
@@ -73,7 +73,7 @@ export default function odataFilterEncode (structure, entries) {
   if (functionName) {
     if (Array.isArray(structure[functionName])) {
       const parameters = structure[functionName].map(param => odataFilterEncode(param, entries))
-      return `${functionName}(${parameters.join(', ')})`
+      return `${functionName}(${parameters.join()})`
     } else {
       const parameter = odataFilterEncode(structure[functionName], entries)
       return `${functionName}(${parameter})`
