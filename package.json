@@ -9,13 +9,13 @@
     "url": "https://github.com/paudr/odata-filter-tools.git"
   },
   "devDependencies": {
-    "@small-tech/esm-tape-runner": "^1.0.3",
-    "eslint": "^8.13.0",
+    "@small-tech/esm-tape-runner": "^2.0.0",
+    "eslint": "^8.29.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "tape": "^5.5.3"
+    "eslint-plugin-promise": "^6.1.1",
+    "tape": "^5.6.1"
   },
   "scripts": {
     "lint": "eslint ./**/*.js",
